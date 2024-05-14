@@ -1,8 +1,11 @@
 .item{
     width: 21%;
 }
-.item img{
-    width: 100%;
+.item img {
+    max-width: 100%;
+    max-height: 200px;
+    width: auto;
+    height: auto;
 }
 .item p{
     margin: 6px 0px;

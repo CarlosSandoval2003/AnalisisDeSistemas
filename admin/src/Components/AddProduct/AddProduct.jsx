@@ -107,7 +107,7 @@ const AddProduct = () => {
     }
   };
 
-  const handleInputChange = (event) => {
+  const handleInputChangeName = (event) => {
     const { name, value } = event.target;
     setProductDetails({ ...productDetails, [name]: value });
     if (value.trim() === "") {
@@ -115,6 +115,11 @@ const AddProduct = () => {
     } else {
       fetchProductos(value);
     }
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setProductDetails({ ...productDetails, [name]: value });
   };
   
 
@@ -222,6 +227,7 @@ const AddProduct = () => {
   
         if (addProductData.success) {
           alert('Producto agregado');
+          limpiarCampos();
         } else {
           alert('Error al agregar el producto');
         }
@@ -231,16 +237,32 @@ const AddProduct = () => {
     }
   };
 
+  const limpiarCampos = () => {
+    setImages([null, null, null]);
+    setProductDetails({
+      nombre_producto: "",
+      descripcion_producto: "",
+      precio: "",
+      cantidad: "",
+      id_categoria: "",
+      id_variacion: "",
+      id_opcion_variacion: "",
+      id_variacion_1: "",
+      id_opcion_variacion_1: "",
+      estado: "1",
+    });
+  };
+
   return (
     <div className="addproduct">
       <div className="addproduct-itemfield">
         <p>Nombre del producto</p>
-        <input
+        <input className="addproduct"
           type="text"
           id="nombre_producto"
           name="nombre_producto"
           value={productDetails.nombre_producto}
-          onChange={handleInputChange}
+          onChange={handleInputChangeName}
           placeholder="Ingrese aquí"
         />
         {productOptions.length > 0 && (

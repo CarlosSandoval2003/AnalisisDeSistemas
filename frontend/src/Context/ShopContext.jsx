@@ -14,12 +14,26 @@ const ShopContextProvider = (props) => {
     return cart;
   };
 
+  const [cartItemCount, setCartItemCount] = useState(0);
   const [cartItems, setCartItems] = useState(getDefaultCart());
+  const [precio,setPrecio] = useState();
 
   useEffect(() => {
-    fetch('http://localhost:4000/allproducts') 
+    const userId = localStorage.getItem("userId");
+    if (userId && userId !== "0") {
+      fetch(`http://localhost:4000/cartItemCount/${userId}`)
+        .then((res) => res.json())
+        .then((data) => setCartItemCount(data.count));
+    } else {
+      setCartItemCount(0);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:4000/allproductsDisplay') 
           .then((res) => res.json()) 
           .then((data) => setProducts(data))
+
 
     if(localStorage.getItem("auth-token"))
     {
@@ -49,6 +63,7 @@ const ShopContextProvider = (props) => {
     return totalAmount;
   };
 
+  
   const getTotalCartItems = () => {
     let totalItem = 0;
     for (const item in cartItems) {
@@ -76,6 +91,7 @@ const ShopContextProvider = (props) => {
       .then((data) => {console.log(data)});
     }
   };
+  
 
   const removeFromCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
@@ -95,7 +111,7 @@ const ShopContextProvider = (props) => {
     }
   };
 
-  const contextValue = {products, getTotalCartItems, cartItems, addToCart, removeFromCart, getTotalCartAmount };
+  const contextValue = {products, getTotalCartItems, cartItems, addToCart, removeFromCart, getTotalCartAmount, cartItemCount, setCartItemCount };
   return (
     <ShopContext.Provider value={contextValue}>
       {props.children}

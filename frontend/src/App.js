@@ -1,3 +1,4 @@
+import React, { createContext, useEffect, useState } from "react";
 import Navbar from "./Components/Navbar/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Shop from "./Pages/Shop";
@@ -9,24 +10,39 @@ import women_banner from "./Components/Assets/banner_women.png";
 import men_banner from "./Components/Assets/banner_mens.png";
 import kid_banner from "./Components/Assets/banner_kids.png";
 import LoginSignup from "./Pages/LoginSignup";
+import ProductDisplay from "./Components/ProductDisplay/ProductDisplay";
+
+export const AuthContext = createContext(null);
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("auth-token"));
 
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem("auth-token");
+  };
+  
   return (
     <div>
       <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Shop gender="all" />} />
-          <Route path="/mens" element={<ShopCategory banner={men_banner} category="men" />} />
-          <Route path="/womens" element={<ShopCategory banner={women_banner} category="women" />} />
-          <Route path="/kids" element={<ShopCategory banner={kid_banner} category="kid" />} />
-          <Route path='/product' element={<Product />}>
-            <Route path=':productId' element={<Product />} />
-          </Route>
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/login" element={<LoginSignup/>} />
-        </Routes>
+        <AuthContext.Provider value={{ isLoggedIn, handleLogin, handleLogout }}>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Shop gender="all" />} />
+            <Route path="/:category/:subCategory" element={<ShopCategory />} />
+            <Route path="/:category" element={<ShopCategory />} />
+            <Route path="/search/:searchTerm" element={<ShopCategory />} />
+            <Route path='/product' element={<Product />}>
+              <Route path=':productId' element={<Product />} />
+            </Route>
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/login" element={<LoginSignup />} />
+          </Routes>
+        </AuthContext.Provider>
         <Footer />
       </Router>
     </div>

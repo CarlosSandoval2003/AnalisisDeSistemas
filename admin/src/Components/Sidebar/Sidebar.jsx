@@ -10,16 +10,33 @@ const Sidebar = () => {
       <Link to='/addproduct' style={{ textDecoration: 'none' }}>
         <div className="sidebar-item">
           <img src={add_product_icon} alt="" />
-          <p>Add Product</p>
+          <p>Agregar Productos</p>
         </div>
       </Link>
       <Link to='/listproduct' style={{ textDecoration: 'none' }}>
         <div className="sidebar-item">
           <img src={list_product_icon} alt="" />
-          <p>Product List</p>
+          <p>Ver Productos</p>
         </div>
       </Link>
-      
+      <Link to='/addpromociones' style={{ textDecoration: 'none' }}>
+        <div className="sidebar-item">
+          <img src={add_product_icon} alt="" />
+          <p>Agregar Temporadas</p>
+        </div>
+      </Link>
+      <Link to='/listpromociones' style={{ textDecoration: 'none' }}>
+        <div className="sidebar-item">
+          <img src={list_product_icon} alt="" />
+          <p>Ver Temporadas</p>
+        </div>
+      </Link>
+      <Link to='/listordenes' style={{ textDecoration: 'none' }}>
+        <div className="sidebar-item">
+          <img src={list_product_icon} alt="" />
+          <p>Ver Ordenes</p>
+        </div>
+      </Link>
     </div>
   )
 }

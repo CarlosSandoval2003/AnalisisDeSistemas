@@ -1,24 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Hero.css";
 import hero_image from "../Assets/hero_image.png";
 import hand_icon from "../Assets/hand_icon.png";
 import arrow_icon from "../Assets/arrow.png";
 
-const Hero = () => {
-  return (
+const Hero = ({ promoCategory, idPadre, nombreCat, promo, desc }) => {
+
+  const handleClick = () => {
+    if (promoCategory) {
+      const idCat = promoCategory;
+      const idPadreCat = idPadre;
+      window.location.href = `/${idPadreCat}/${idCat}`;
+    }
+  };
+
+return (
     <div className="hero">
       <div className="hero-left">
-        <h2>NEW ARRIVALS ONLY</h2>
+        <p>{promo}</p>
+        <h2>{desc}</h2>
         <div>
           <div className="hero-hand-icon">
-            <p>new</p>
+            <p>DESCUENTOS EN</p>
             <img src={hand_icon} alt="" />
           </div>
-          <p>collections</p>
-          <p>for everyone</p>
+          {promoCategory && (
+            <>
+              <p>{nombreCat}</p>
+            </>
+          )}
         </div>
-        <div className="hero-latest-btn">
-          <div>Latest Collection</div>
+        <div className="hero-latest-btn" onClick={handleClick}>
+          <div>VER</div>
           <img src={arrow_icon} alt="" />
         </div>
       </div>

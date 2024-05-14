@@ -114,7 +114,7 @@ const handleEdit = async (product) => {
 
   return (
     <div className="listproduct">
-      <h1>All Products List</h1>
+      <h1>Lista de Productos</h1>
       <input
         type="text"
         placeholder="Buscar producto..."
